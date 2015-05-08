@@ -84,17 +84,21 @@
         weeksToDisplay = 2.;
     }
     else{
-        weeksToDisplay = (CGFloat)(WEEKS_TO_DISPLAY + 1); // + 1 for weekDays
+        weeksToDisplay = (CGFloat)(WEEKS_TO_DISPLAY);
+//        weeksToDisplay = (CGFloat)(WEEKS_TO_DISPLAY + 1); // + 1 for weekDays
     }
     
     CGFloat y = 0;
     CGFloat width = self.frame.size.width;
-    CGFloat height = self.frame.size.height / weeksToDisplay;
+    CGFloat height = (self.frame.size.height - 22) / weeksToDisplay;
     
     for(int i = 0; i < self.subviews.count; ++i){
         UIView *view = self.subviews[i];
         
-        view.frame = CGRectMake(0, y, width, height);
+        if ([view isKindOfClass:[JTCalendarMonthWeekDaysView class]]) {
+            view.frame = CGRectMake(0, y, width, 22);
+        } else
+            view.frame = CGRectMake(0, y, width, height);
         y = CGRectGetMaxY(view.frame);
         
         if(cacheLastWeekMode && i == weeksToDisplay - 1){
